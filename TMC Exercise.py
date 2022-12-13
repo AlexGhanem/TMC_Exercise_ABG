@@ -135,6 +135,12 @@ df_last_name_address_match = (pd.DataFrame(ls, columns=df_address_match.columns)
 
 df_last_name_address_match = df_last_name_address_match.merge(df_matching,left_on='entry_index',right_index=True)
 
+"""
+since I already saved the indexes, the last part is to join the initial data 
+with the matched data to get a list of people with their respective VoterIDs
+
+"""
+
 df_final = df_matching.merge(df_last_name_address_match[['entry_index', 'vf_id']],left_index=True, right_on='entry_index').drop('entry_index',axis=1)
 df_final = df_final.rename(columns={'vf_id':'matched_voterid'})
 df_final.to_csv('matched.csv')
